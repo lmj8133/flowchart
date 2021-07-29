@@ -1,0 +1,42 @@
+% Template: flow chart
+\documentclass{article}
+
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage{tikz}
+
+\pagestyle{empty}
+\usetikzlibrary{positioning, shapes.geometric, arrows, shapes.misc}
+
+\begin{document}
+%for start point or end point use
+\tikzstyle{terminal} = [rounded rectangle, draw, fill = black!0, 
+                        text centered, node distance=2.6cm, minimum height=4em, 
+                        minimum width = 10em]  
+%for desision use
+\tikzstyle{decision} = [diamond, draw, fill = blue!20, text centered, 
+                        node distance = 2.6cm, minimum height = 5em, 
+                        minimum width = 5em,aspect = 2]   
+%for process use 
+\tikzstyle{process} = [rectangle, draw, fill=yellow!20, text centered, 
+                       rounded corners, node distance=2.6cm, minimum height=4em, 
+                       minimum width = 10em]  
+\begin{tikzpicture}
+\node (START) [terminal] {\color{red}{START}};
+\node (PROCESS) [process, below=of START] {PROCESS};
+\node (DECISION1) [decision,below=of PROCESS] {DECISION 1};
+\node (DECISION2) [decision,left=of DECISION1] {DECISION 2};
+\node (DECISION3) [decision,below=of DECISION1] {DECISION 3};
+\node (END) [terminal,below=of DECISION3] {\color{red}{END}};
+
+\draw [-latex, thick, black] (START) -- (PROCESS);
+\draw [-latex, thick, black] (PROCESS) -- (DECISION1);
+\draw [-latex, thick, black] (DECISION1) -- node [pos = 0.5, fill = white] {no} (DECISION2);
+\draw [-latex, thick, black] (DECISION2) |- node [pos = 0.25, fill = white] {no} (PROCESS);
+\draw [-latex, thick, black] (DECISION2) -- ++(-2, 0) |- node [pos = 0.25,fill = white] {yes}(START);
+\draw [-latex, thick, black] (DECISION1) -- node [pos = 0.5, fill = white]{yes} (DECISION3);
+\draw [-latex, thick, black] (DECISION3) -- node[pos = 0.5, fill = white]{yes} (END);
+\draw [-latex, thick, black] (DECISION3) -| node[pos = 0.25, fill = white]{no} (DECISION2);
+
+\end{tikzpicture}
+\end{document}
